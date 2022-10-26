@@ -1,0 +1,25 @@
+.btn {
+    font-weight: 600;
+    font-size: 30px;
+    line-height: 20px;
+    color: #282c34;
+
+    width: 120px;
+    height: 70px;
+    border: none;
+    background: #22bba7;
+    border-radius: 20px;
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+.btn:active {
+    transform: translateY(-1px);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.disabled {
+    opacity: 0.4;
+}
