@@ -1,6 +1,6 @@
 {
-  "homepage": "https://tepek92.github.io/counter",
   "name": "counter",
+  "homepage": "https://tepek92.github.io/counter/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
