@@ -8,12 +8,12 @@ export const ColorModeContext = React.createContext({ toggleColorMode: () => {} 
 
 function App() {
 
-    const [mode, setMode] = React.useState<'light' | 'dark'>(JSON.parse(localStorage.getItem("colorMode") || "light"));
+    const [mode, setMode] = React.useState<"light" | "dark">(JSON.parse(localStorage.getItem("colorMode") || JSON.stringify("light")));
     useEffect(() => localStorage.setItem("colorMode", JSON.stringify(mode)), [mode]);
 
     const colorMode = React.useMemo(() => ({
             toggleColorMode: () => {
-                setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
+                setMode((prevMode) => (prevMode === "light" ? "dark" : "light"));
             },
         }), [],);
 
