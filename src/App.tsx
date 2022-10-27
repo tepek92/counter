@@ -8,10 +8,10 @@ export const ColorModeContext = React.createContext({ toggleColorMode: () => {} 
 
 function App() {
 
-    let initMode = localStorage.getItem("colorMode") /*|| "light";*/
-    console.log(initMode)
+    const colorModeLS = localStorage.getItem("colorMode");
+    const initMode = colorModeLS ? JSON.parse(colorModeLS) : "light";
 
-    const [mode, setMode] = React.useState<"light" | "dark">(initMode ? JSON.parse(initMode) : "light");
+    const [mode, setMode] = React.useState<"light" | "dark">(initMode);
     useEffect(() => localStorage.setItem("colorMode", JSON.stringify(mode)), [mode]);
 
     const colorMode = React.useMemo(() => ({
