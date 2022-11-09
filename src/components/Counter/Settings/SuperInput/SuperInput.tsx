@@ -8,8 +8,8 @@ import React, {ChangeEvent} from "react";
 type SuperInputProps = {
     title: string
     onChange: (e: ChangeEvent<HTMLInputElement>) => void
-    setValue: (newValue: string) => void;
-    value: string
+    setValue: (newValue: number) => void;
+    value: number
     error: boolean
 }
 
@@ -17,9 +17,9 @@ export function SuperInput(props: SuperInputProps) {
 
     const {title, onChange, setValue, value, error} = props;
 
-    const addValue = () => setValue(JSON.stringify(+value + 1));
-
-    const minusValue = () => setValue(JSON.stringify(+value - 1));
+    // изменение значения кнопками
+    const addValue = () => setValue(value + 1);
+    const minusValue = () => setValue(value - 1);
 
     return (
         <>

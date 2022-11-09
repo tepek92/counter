@@ -2,14 +2,14 @@ import React from 'react';
 import s from './Result.module.css'
 
 type ResultPropsType = {
-    MAX_COUNT: number
+    maxCount: number
     count: number
     changeCount: () => void
 }
 
 export function Result(props: ResultPropsType) {
-    const {count, MAX_COUNT, changeCount} = props;
-    const styleText = count === MAX_COUNT ? `${s.text} ${s.red}` : s.text;
+    const {count, maxCount, changeCount} = props;
+    const styleText = count === maxCount ? `${s.text} ${s.red}` : s.text;
 
 
     return (

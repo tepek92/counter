@@ -7,7 +7,9 @@ import Brightness7Icon from '@mui/icons-material/Brightness7';
 import { ColorModeContext } from '../../../App';
 
 export function ToggleColorMode() {
+    // достаем данные о стилях?
     const theme = useTheme();
+    // достаю из контекста объект с функцией переключения
     const colorMode = React.useContext(ColorModeContext);
     return (
         <Box

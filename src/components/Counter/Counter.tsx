@@ -6,20 +6,23 @@ import {Settings} from "./Settings/Settings";
 import {ToggleColorMode} from "./ToggleColorMode/ToggleColorMode";
 
 export function Counter() {
-    const [START_COUNT, setStartCount] = useState<number>(JSON.parse(localStorage.getItem("START_COUNT") || "0"));
-    const [MAX_COUNT, setMaxCount] = useState<number>(JSON.parse(localStorage.getItem("MAX_COUNT") || "5"));
-    const [STEP_COUNT, setStepCount] = useState<number>(JSON.parse(localStorage.getItem("STEP_COUNT") || "1"));
+    // получаем "последние" данные из local storage
+    const [startCount, setStartCount] = useState<number>(JSON.parse(localStorage.getItem("startCount") || "0"));
+    const [maxCount, setMaxCount] = useState<number>(JSON.parse(localStorage.getItem("maxCount") || "5"));
+    const [stepCount, setStepCount] = useState<number>(JSON.parse(localStorage.getItem("stepCount") || "1"));
     const [count, setCount] = useState<number>(JSON.parse(localStorage.getItem("count") || "0"));
     const [display, setDisplay] = useState<boolean>(JSON.parse(localStorage.getItem("display") || "true"));
 
-
+    // лучше один useEffect или несколько
+    // ?
+    // тут поулчается, что при любом изменении все данные воторно пересохраняет
     useEffect(() => {
-        localStorage.setItem("START_COUNT", JSON.stringify(START_COUNT));
-        localStorage.setItem("MAX_COUNT", JSON.stringify(MAX_COUNT));
-        localStorage.setItem("STEP_COUNT", JSON.stringify(STEP_COUNT));
+        localStorage.setItem("startCount", JSON.stringify(startCount));
+        localStorage.setItem("maxCount", JSON.stringify(maxCount));
+        localStorage.setItem("stepCount", JSON.stringify(stepCount));
         localStorage.setItem("count", JSON.stringify(count));
         localStorage.setItem("display", JSON.stringify(display));
-    }, [START_COUNT, MAX_COUNT,STEP_COUNT, count, display])
+    }, [startCount, maxCount,stepCount, count, display])
 
 
     const addNewSettings = (newStartValue: number, newMaxValue: number, newStepValue: number) => {
@@ -31,42 +34,41 @@ export function Counter() {
     }
 
     const changeCount = () => {
-        if (count + STEP_COUNT > MAX_COUNT) {
-            setCount(MAX_COUNT);
-        } else if (count < MAX_COUNT) {
-            setCount(count + STEP_COUNT)
+        if (count + stepCount > maxCount) {
+            setCount(maxCount);
+        } else {
+            setCount(count + stepCount)
         }
-    }
-    const resetCount = () => setCount(START_COUNT);
+    };
+
+    const resetCount = () => setCount(startCount);
 
     const changeDisplay = () => setDisplay(!display);
 
     return (
         <div className={s.body}>
-            {!display &&
+            {display &&
                 <div className={s.display}>
                     <Controler
-                        START_COUNT={START_COUNT}
+                        startCount={startCount}
                         count={count}
                         resetCount={resetCount}
                         changeDisplay={changeDisplay}
                     />
-                    <Result MAX_COUNT={MAX_COUNT} count={count} changeCount={changeCount}/>
+                    <Result maxCount={maxCount} count={count} changeCount={changeCount}/>
                     <ToggleColorMode />
                 </div>}
-            {display &&
+            {!display &&
                 <div className={s.display}>
                     <Settings
-                        START_COUNT={START_COUNT}
-                        MAX_COUNT={MAX_COUNT}
-                        STEP_COUNT={STEP_COUNT}
+                        startCount={startCount}
+                        maxCount={maxCount}
+                        stepCount={stepCount}
                         addNewSettings={addNewSettings}
                         changeDisplay={changeDisplay}
                     />
                 </div>}
         </div>
-
-
     );
 }
 

@@ -5,15 +5,15 @@ import TuneIcon from '@mui/icons-material/Tune';
 import AutorenewIcon from '@mui/icons-material/Autorenew';
 
 type ControlPropsType = {
-    START_COUNT: number
+    startCount: number
     count: number
     resetCount: () => void
     changeDisplay: () => void
 }
 
 export function Controler(props: ControlPropsType) {
-    const {START_COUNT, count, resetCount, changeDisplay} = props;
-    const disabled = count === START_COUNT;
+    const {startCount, count, resetCount, changeDisplay} = props;
+    const disabled = count === startCount;
     const colorResetButton = disabled ? "inherit" : "primary";
 
 

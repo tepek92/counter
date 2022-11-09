@@ -7,38 +7,40 @@ import {SuperInput} from "./SuperInput/SuperInput";
 
 
 type SettingsPropsType = {
-    START_COUNT: number
-    MAX_COUNT: number
-    STEP_COUNT: number
+    startCount: number
+    maxCount: number
+    stepCount: number
     addNewSettings: (newStartValue: number, newMaxValue: number, newStepValue: number) => void
     changeDisplay: () => void
 }
 
 export const Settings = (props: SettingsPropsType) => {
-    const {START_COUNT, MAX_COUNT, STEP_COUNT, addNewSettings, changeDisplay} = props;
+    const {startCount, maxCount, stepCount, addNewSettings, changeDisplay} = props;
     // нужен ли тут useEffect или достаточно, что значения из пропсов сетаются при новой отрисовке
-    const [start, setStar] = useState<string>(JSON.stringify(START_COUNT));
-    const [max, setMax] = useState<string>(JSON.stringify(MAX_COUNT));
-    const [step, setStep] = useState<string>(JSON.stringify(STEP_COUNT));
+    const [start, setStar] = useState<number>(startCount);
+    const [max, setMax] = useState<number>(maxCount);
+    const [step, setStep] = useState<number>(stepCount);
 
+    // считывает значения при изменении импута
     const onChangeStartHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setStar(e.currentTarget.value);
+        setStar(+e.currentTarget.value);
     }
     const onChangeMaxHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setMax(e.currentTarget.value);
+        setMax(+e.currentTarget.value);
     }
     const onChangeStepHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setStep(e.currentTarget.value);
+        setStep(+e.currentTarget.value);
     }
 
-
+    // устанавливаем значения из локального стейта в стей в каунтере
     const saveSetting = () => {
-        addNewSettings(+start, +max, +step);
+        addNewSettings(start, max, step);
     }
 
-    const errorStart = start === max || +start < 0 || +start > +max;
-    const errorMax = start === max || +max < 0 || +start > +max;
-    const errorStep = +step <= 0;
+    const error = start === max || start > max;
+    const errorStart = error || start < 0;
+    const errorMax = error || max < 0;
+    const errorStep = step <= 0;
 
     const disabled = errorStart || errorMax || errorStep;
     const colorResetButton = disabled ? "inherit" : "primary";
@@ -73,7 +75,8 @@ export const Settings = (props: SettingsPropsType) => {
                 <SuperInput
                     title={"MAX VALUE"}
                     onChange={onChangeMaxHandler}
-                    setValue={setMax} value={max}
+                    setValue={setMax}
+                    value={max}
                     error={errorMax}
                 />
                 <SuperInput
