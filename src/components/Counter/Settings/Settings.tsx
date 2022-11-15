@@ -3,7 +3,7 @@ import s from './Settings.module.css';
 import DoneIcon from '@mui/icons-material/Done';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import IconButton from "@mui/material/IconButton";
-import {SuperInput} from "./SuperInput/SuperInput";
+import {SuperInput} from "../../universal/SuperInput/SuperInput";
 
 
 type SettingsPropsType = {
@@ -22,18 +22,18 @@ export const Settings = (props: SettingsPropsType) => {
     const [step, setStep] = useState<number>(stepCount);
 
     // считывает значения при изменении импута
-    const onChangeStartHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    const onChangeStartHandler = (e: ChangeEvent<HTMLInputElement>): void => {
         setStar(+e.currentTarget.value);
     }
-    const onChangeMaxHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    const onChangeMaxHandler = (e: ChangeEvent<HTMLInputElement>): void => {
         setMax(+e.currentTarget.value);
     }
-    const onChangeStepHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    const onChangeStepHandler = (e: ChangeEvent<HTMLInputElement>): void => {
         setStep(+e.currentTarget.value);
     }
 
     // устанавливаем значения из локального стейта в стей в каунтере
-    const saveSetting = () => {
+    const saveSetting = (): void => {
         addNewSettings(start, max, step);
     }
 

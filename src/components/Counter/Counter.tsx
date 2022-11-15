@@ -3,27 +3,26 @@ import {Result} from './Result/Result';
 import {Controler} from './Controler/Controler';
 import s from './Counter.module.css';
 import {Settings} from "./Settings/Settings";
-import {ToggleColorMode} from "./ToggleColorMode/ToggleColorMode";
-import {useDispatch, useSelector} from "react-redux";
-import {RootAppState, useAppSelector} from "../../state/store";
+import {ToggleColorMode} from "../universal/ToggleColorMode/ToggleColorMode";
 import {
+    CounterState,
     addSettingsValuesAC,
     changeCountAC,
     changeDisplayAC,
-    CounterState,
     resetCountAC
 } from "../../state/counterReducer";
+import {useAppDispatch, useAppSelector} from "../../state/hooks";
 
 export function Counter() {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const {startCount, maxCount, stepCount, count, display} =
         useAppSelector<CounterState>(state => state.counterState);
 
-    const addNewSettings = (newStartValue: number, newMaxValue: number, newStepValue: number) => {
+    const addNewSettings = (newStartValue: number, newMaxValue: number, newStepValue: number): void => {
         dispatch(addSettingsValuesAC(newStartValue, newMaxValue, newStepValue));
     }
 
-    const changeCount = () => {
+    const changeCount = (): void => {
         if (count + stepCount > maxCount) {
             dispatch(changeCountAC(maxCount));
         } else {
@@ -31,8 +30,8 @@ export function Counter() {
         }
     };
 
-    const resetCount = () => dispatch(resetCountAC());
-    const changeDisplay = () => dispatch(changeDisplayAC());
+    const resetCount = (): void => {dispatch(resetCountAC())};
+    const changeDisplay = (): void => {dispatch(changeDisplayAC())};
 
     return (
         <div className={s.body}>
@@ -44,7 +43,10 @@ export function Counter() {
                         resetCount={resetCount}
                         changeDisplay={changeDisplay}
                     />
-                    <Result maxCount={maxCount} count={count} changeCount={changeCount}/>
+                    <Result
+                        maxCount={maxCount}
+                        count={count}
+                        changeCount={changeCount}/>
                     <ToggleColorMode />
                 </div>}
             {!display &&

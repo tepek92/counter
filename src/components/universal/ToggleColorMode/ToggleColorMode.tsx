@@ -5,12 +5,13 @@ import { useTheme } from '@mui/material/styles';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import { ColorModeContext } from '../../../App';
+import {useContext} from "react";
 
 export function ToggleColorMode() {
     // достаем данные о стилях?
     const theme = useTheme();
     // достаю из контекста объект с функцией переключения
-    const colorMode = React.useContext(ColorModeContext);
+    const colorMode = useContext(ColorModeContext);
     return (
         <Box
             sx={{
@@ -24,7 +25,11 @@ export function ToggleColorMode() {
             }}
         >
             {theme.palette.mode} mode
-            <IconButton sx={{ ml: 1 }} onClick={colorMode.toggleColorMode} color="inherit">
+            <IconButton
+                sx={{ ml: 1 }}
+                onClick={colorMode.toggleColorMode}
+                color="inherit"
+            >
                 {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
             </IconButton>
         </Box>

@@ -18,8 +18,8 @@ export function SuperInput(props: SuperInputProps) {
     const {title, onChange, setValue, value, error} = props;
 
     // изменение значения кнопками
-    const addValue = () => setValue(value + 1);
-    const minusValue = () => setValue(value - 1);
+    const addValue = (): void => setValue(value + 1);
+    const minusValue = (): void => setValue(value - 1);
 
     return (
         <>

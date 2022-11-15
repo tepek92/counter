@@ -14,39 +14,43 @@ const initialState: CounterState = {
     display: true,
 }
 
-type AllAction =
+export type AllActions =
     ReturnType<typeof changeCountAC> |
     ReturnType<typeof resetCountAC> |
     ReturnType<typeof addSettingsValuesAC> |
     ReturnType<typeof changeDisplayAC>;
 
 
-export const counterReducer = (state = initialState, action: AllAction): CounterState => {
+export const counterReducer = (state = initialState, action: AllActions): CounterState => {
     switch (action.type) {
         case "CHANGE_COUNT":
-            return {...state, count: action.newCount};
+        case "ADD_SETTINGS_VALUE":
+            return {...state, ...action.payload};
         case "RESET_COUNT":
             return {...state, count: state.startCount};
-        case "ADD_SETTINGS_VALUE":
-            return {
-                ...state,
-                startCount: action.newStartValue,
-                maxCount: action.newMaxValue,
-                stepCount: action.newStepValue,
-                count: action.newStartValue,
-                display: true
-            };
+
         case "CHANGE_DISPLAY":
             return {...state, display: !state.display};
         default: return state;
     }
 }
 
-export const changeCountAC = (newCount: number) => ({type: 'CHANGE_COUNT', newCount} as const);
+export const changeCountAC = (newCount: number) => ({type: 'CHANGE_COUNT', payload: {count: newCount}} as const);
 
 export const resetCountAC = () => ({type: 'RESET_COUNT'} as const);
 
 export const addSettingsValuesAC = (newStartValue: number, newMaxValue: number, newStepValue: number) =>
-    ({type: 'ADD_SETTINGS_VALUE', newStartValue, newMaxValue, newStepValue} as const);
+    ({type: 'ADD_SETTINGS_VALUE', payload: {
+            count: newStartValue,
+            startCount: newStartValue,
+            maxCount: newMaxValue,
+            stepCount: newStepValue,
+            display: true}} as const);
 
 export const changeDisplayAC = () => ({type: 'CHANGE_DISPLAY'} as const);
+
+// startCount: 0,
+//     maxCount: 5,
+//     stepCount: 1,
+//     count: 0,
+//     display: true,
