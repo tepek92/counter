@@ -1,49 +1,38 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {Result} from './Result/Result';
 import {Controler} from './Controler/Controler';
 import s from './Counter.module.css';
 import {Settings} from "./Settings/Settings";
 import {ToggleColorMode} from "./ToggleColorMode/ToggleColorMode";
+import {useDispatch, useSelector} from "react-redux";
+import {RootAppState, useAppSelector} from "../../state/store";
+import {
+    addSettingsValuesAC,
+    changeCountAC,
+    changeDisplayAC,
+    CounterState,
+    resetCountAC
+} from "../../state/counterReducer";
 
 export function Counter() {
-    // получаем "последние" данные из local storage
-    const [startCount, setStartCount] = useState<number>(JSON.parse(localStorage.getItem("startCount") || "0"));
-    const [maxCount, setMaxCount] = useState<number>(JSON.parse(localStorage.getItem("maxCount") || "5"));
-    const [stepCount, setStepCount] = useState<number>(JSON.parse(localStorage.getItem("stepCount") || "1"));
-    const [count, setCount] = useState<number>(JSON.parse(localStorage.getItem("count") || "0"));
-    const [display, setDisplay] = useState<boolean>(JSON.parse(localStorage.getItem("display") || "true"));
-
-    // лучше один useEffect или несколько
-    // ?
-    // тут поулчается, что при любом изменении все данные воторно пересохраняет
-    useEffect(() => {
-        localStorage.setItem("startCount", JSON.stringify(startCount));
-        localStorage.setItem("maxCount", JSON.stringify(maxCount));
-        localStorage.setItem("stepCount", JSON.stringify(stepCount));
-        localStorage.setItem("count", JSON.stringify(count));
-        localStorage.setItem("display", JSON.stringify(display));
-    }, [startCount, maxCount,stepCount, count, display])
-
+    const dispatch = useDispatch();
+    const {startCount, maxCount, stepCount, count, display} =
+        useAppSelector<CounterState>(state => state.counterState);
 
     const addNewSettings = (newStartValue: number, newMaxValue: number, newStepValue: number) => {
-        setCount(newStartValue);
-        setStartCount(newStartValue);
-        setMaxCount(newMaxValue);
-        setStepCount(newStepValue);
-        changeDisplay()
+        dispatch(addSettingsValuesAC(newStartValue, newMaxValue, newStepValue));
     }
 
     const changeCount = () => {
         if (count + stepCount > maxCount) {
-            setCount(maxCount);
+            dispatch(changeCountAC(maxCount));
         } else {
-            setCount(count + stepCount)
+            dispatch(changeCountAC(count + stepCount));
         }
     };
 
-    const resetCount = () => setCount(startCount);
-
-    const changeDisplay = () => setDisplay(!display);
+    const resetCount = () => dispatch(resetCountAC());
+    const changeDisplay = () => dispatch(changeDisplayAC());
 
     return (
         <div className={s.body}>

@@ -66,21 +66,21 @@ export const Settings = (props: SettingsPropsType) => {
             </div>
             <div className={s.settings}>
                 <SuperInput
-                    title={"START VALUE"}
+                    title="START VALUE"
                     onChange={onChangeStartHandler}
                     setValue={setStar}
                     value={start}
                     error={errorStart}
                 />
                 <SuperInput
-                    title={"MAX VALUE"}
+                    title="MAX VALUE"
                     onChange={onChangeMaxHandler}
                     setValue={setMax}
                     value={max}
                     error={errorMax}
                 />
                 <SuperInput
-                    title={"STEP"}
+                    title="STEP"
                     onChange={onChangeStepHandler}
                     setValue={setStep}
                     value={step}

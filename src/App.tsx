@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState, createContext, useMemo} from 'react';
 import './App.css';
 import {Counter} from "./components/Counter/Counter";
 import {CssBaseline, Paper} from "@mui/material";
@@ -6,7 +6,7 @@ import {ThemeProvider, createTheme} from '@mui/material/styles';
 
 
 // создаем контекст и присваиваем ему первоначальное значение(функцию переключеиня темы)
-export const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
+export const ColorModeContext = createContext({ toggleColorMode: () => {} });
 
 function App() {
 
@@ -15,21 +15,21 @@ function App() {
     const initMode = colorModeLS ? JSON.parse(colorModeLS) : "light";
 
     // состояние темы
-    const [mode, setMode] = React.useState<"light" | "dark">(initMode);
+    const [mode, setMode] = useState<"light" | "dark">(initMode);
 
     // при изменении темы, "запоминаем" состояние в local storage
     useEffect(() => localStorage.setItem("colorMode", JSON.stringify(mode)), [mode]);
 
     // создаем объект с функцию изменения темы и мемоизируем его
     // создается всего 1 раз, т.к. нет зависимостей
-    const colorMode = React.useMemo(() => ({
+    const colorMode = useMemo(() => ({
             toggleColorMode: () => {
                 setMode((prevMode) => (prevMode === "light" ? "dark" : "light"));
             },
         }), []);
 
     // подменяем стили в MUI на собственные, устанавливаем тему
-    const theme = React.useMemo(() => createTheme({palette: {mode}}), [mode]);
+    const theme = useMemo(() => createTheme({palette: {mode}}), [mode]);
 
     return (
         <ColorModeContext.Provider value={colorMode}>

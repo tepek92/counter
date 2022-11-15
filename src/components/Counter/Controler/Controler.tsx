@@ -19,7 +19,10 @@ export function Controler(props: ControlPropsType) {
 
     return (
         <div className={s.control}>
-            <IconButton disabled={disabled} onClick={resetCount}><AutorenewIcon color={colorResetButton}/></IconButton>
+            <IconButton disabled={disabled}
+                        onClick={resetCount}>
+                <AutorenewIcon color={colorResetButton}/>
+            </IconButton>
             <div><b>Counter</b></div>
             <IconButton onClick={changeDisplay}><TuneIcon color="primary"/></IconButton>
         </div>
