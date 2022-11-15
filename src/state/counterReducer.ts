@@ -48,9 +48,3 @@ export const addSettingsValuesAC = (newStartValue: number, newMaxValue: number, 
             display: true}} as const);
 
 export const changeDisplayAC = () => ({type: 'CHANGE_DISPLAY'} as const);
-
-// startCount: 0,
-//     maxCount: 5,
-//     stepCount: 1,
-//     count: 0,
-//     display: true,
