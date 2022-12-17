@@ -28,7 +28,6 @@ export const counterReducer = (state = initialState, action: AllActions): Counte
             return {...state, ...action.payload};
         case "RESET_COUNT":
             return {...state, count: state.startCount};
-
         case "CHANGE_DISPLAY":
             return {...state, display: !state.display};
         default: return state;
